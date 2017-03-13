@@ -34,23 +34,36 @@ class ApiCaller
 		{
 			echo "curl not initialized";
 		}	
-		
+		//print_r($params);
+		//echo "error</br>";
 		curl_setopt($ch, CURLOPT_URL, $this->_api_url);
+
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER,TRUE);
-		curl_setopt($ch, CURLOPT_POST,count($params));
 
+		curl_setopt($ch, CURLOPT_POST, 1);
+		
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+		
 		$result = curl_exec($ch);
-
-		$info =  curl_getinfo($ch);
+		//print_r($result);
+		//$result = str_replace('&quot;', '"', $result);
+		$result = @json_decode($result,true);
+		//$info =  curl_getinfo($ch);
+		echo json_last_error();
 		curl_close($ch);
-		$result = json_decode($result);
-
-		if(!isset($result)) 
+		//print_r($result['data']);
+		//echo $result['data'][0];
+		 $r = json_encode($result['data']);
+		 echo $r;
+		if($params['action'] == "read")
+		{
+			header("Location: read_result.php?data=$r");
+		}
+		if($result === null && json_last_error()== JSON_ERROR_SYNTAX)
 		{
 			throw new Exception("Request was not correct");
 		}
-		if ($result->success == false)
+		if ($result['success'] === false)
 		{
 			throw new Exception($result['errormsg']);
 		}

@@ -11,7 +11,7 @@
 		<input type="text" id="login_username" name="login_username" value='kk'/>
 
 		<label for="login_password">Password:</label>
-		<input type="password" id="login_password" name="login_password" value='1234'/>
+		<input type="password" id="login_password" name="login_password" value='test1234'/>
 		<input type= "radio" name="action" value="read">Read</input>
 		<input type= "radio" name="action" value="create">Create</input>
 

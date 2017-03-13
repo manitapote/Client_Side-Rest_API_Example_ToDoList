@@ -19,9 +19,9 @@ if($_SESSION['action'] == "create")
 {
 	$create_info = array(
 		'todo_id'=>'',
-		'title'=>'first',
-		'description'=>'first in first',
-		'due_date'=>'2017',
+		'title'=>'second',
+		'description'=>'second in second',
+		'due_date'=>'2018',
 		'is_done'=>false);
 
 	$common_info = array_merge($common_info,$create_info);
@@ -30,5 +30,5 @@ if($_SESSION['action'] == "create")
 //print_r($common_info);
 echo "</br></br>";
 $todo_items = $apicaller->sendRequest($common_info);
-var_dump($todo_items);
+//var_dump($todo_items);
 ?>
