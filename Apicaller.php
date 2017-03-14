@@ -28,14 +28,12 @@ class ApiCaller
 		$params1['app_key'] = $this->_app_key;
 		$params1['app_id'] = $this->_app_id;
 		$params= array_merge($params1,$request_params);
-		echo "</br></br>from apicaller</br></br>";
 		$ch = curl_init();
 		if(!$ch)
 		{
 			echo "curl not initialized";
 		}	
-		//print_r($params);
-		//echo "error</br>";
+		
 		curl_setopt($ch, CURLOPT_URL, $this->_api_url);
 
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER,TRUE);
@@ -46,19 +44,23 @@ class ApiCaller
 		
 		$result = curl_exec($ch);
 		//print_r($result);
-		//$result = str_replace('&quot;', '"', $result);
 		$result = @json_decode($result,true);
 		//$info =  curl_getinfo($ch);
 		echo json_last_error();
 		curl_close($ch);
-		//print_r($result['data']);
-		//echo $result['data'][0];
-		 $r = json_encode($result['data']);
-		 echo $r;
+		
+		$r = json_encode($result['data']);
 		if($params['action'] == "read")
 		{
 			header("Location: read_result.php?data=$r");
 		}
+
+		if ($params['action'] == "update")
+		{
+			header("Location: update.php?data=$r");
+		}
+
+
 		if($result === null && json_last_error()== JSON_ERROR_SYNTAX)
 		{
 			throw new Exception("Request was not correct");
